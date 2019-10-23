@@ -4,6 +4,8 @@ const gallery = document.getElementById('gallery');
 
 let jsonData;
 
+//async function to fetch api data and parse using json
+//the data is then stored in the jsonData variable and the function returns the data
 async function fetchData(){
     const res = await fetch('https://randomuser.me/api/?nat=us&results=12');
     const data = await res.json();
@@ -13,6 +15,8 @@ async function fetchData(){
     
 }
 
+//createCard function to create user cards and append them to the gallery
+//it is only passed one parameter which is 'data', the list of random users and is cycled through while information is stored in their respective variables
 function createCard(data){
     data.results.forEach( person => {
         const card = document.createElement('div');
@@ -35,9 +39,11 @@ function createCard(data){
     
 }
 
+//fetchData function is called and the 'data' is passed to the createCard method 
 fetchData()
     .then(data => createCard(data));
 
+//function to create the modal popup container for users
 function createModalContainer(){
     const modalContainer = document.createElement('div');
     modalContainer.className = 'modal-container';
@@ -57,6 +63,7 @@ function createModalContainer(){
     modalDiv.appendChild(modalInfo);
 }
 
+//function to create modal info based on the information passed from the person property from the parsed jsonData
 function createModalInfo(name){
     jsonData.forEach(person => {
         const firstName = person.name.first;
@@ -81,7 +88,8 @@ function createModalInfo(name){
     })
 }
 
-
+//event listener listening for clicks to a given user modal
+//once a modal is clicked it is then opened with the modal info and allows the ability to close it out with an 'X' icon
 document.addEventListener('click', event =>{
     const target = event.target;
     
